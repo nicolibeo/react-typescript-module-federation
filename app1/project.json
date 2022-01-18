@@ -5,11 +5,11 @@
   "targets": {
     "build": {
       "executor": "@nrwl/workspace:run-commands",
-      "outputs": ["dist"],
+      "outputs": ["../dist/app1"],
       "options": {
         "maxWorkers": 1,
         "memoryLimit": 10281,
-        "command": "node ../../node_modules/.bin/react-app-rewired build",
+        "command": "webpack --config webpack.prod.js",
         "cwd": "app1"
       }
     },
