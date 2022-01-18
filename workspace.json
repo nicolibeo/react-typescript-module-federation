@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "projects": {
+    "container": "container",
+    "app1": "app1",
+    "app2": "app2"
+  }
+}

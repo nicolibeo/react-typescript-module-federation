@@ -1,0 +1,29 @@
+{
+  "root": "app2",
+  "sourceRoot": "app2/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": ["dist"],
+      "options": {
+        "maxWorkers": 1,
+        "memoryLimit": 10281,
+        "command": "node ../../node_modules/.bin/react-app-rewired build",
+        "cwd": "app2"
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "maxWorkers": 1,
+        "tsConfig": "app2/tsconfig.json",
+        "memoryLimit": 10281,
+        "command": "webpack-dev-server",
+        "cwd": "app2"
+      }
+    }
+  },
+  "tags": []
+}
