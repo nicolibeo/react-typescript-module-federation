@@ -1,14 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
-const deps = require('../package.json').dependencies;
+const deps = require('../../package.json').dependencies;
 
 module.exports = {
   entry: './src/index.ts',
   mode: 'development',
   output: {
     filename: '[name].bundle.js',
-    path: path.join(process.cwd(), '../', process.env.OUTPUT),
+    path: path.join(process.cwd(), '..', '..', process.env.OUTPUT),
     clean: true,
   },
   resolve: {

@@ -1,16 +1,16 @@
 {
-  "root": "app2",
-  "sourceRoot": "app2/src",
+  "root": "apps/container",
+  "sourceRoot": "apps/container/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/workspace:run-commands",
-      "outputs": ["../dist/app2"],
+      "outputs": ["../dist"],
       "options": {
         "maxWorkers": 1,
         "memoryLimit": 10281,
         "command": "webpack --config webpack.prod.js",
-        "cwd": "app2"
+        "cwd": "apps/container"
       }
     },
     "serve": {
@@ -18,10 +18,10 @@
       "outputs": [],
       "options": {
         "maxWorkers": 1,
-        "tsConfig": "app2/tsconfig.json",
+        "tsConfig": "container/tsconfig.json",
         "memoryLimit": 10281,
         "command": "webpack-dev-server",
-        "cwd": "app2"
+        "cwd": "apps/container"
       }
     }
   },

@@ -1,13 +1,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
-const deps = require('../package.json').dependencies;
+const deps = require('../../package.json').dependencies;
 
 module.exports = {
   entry: './src/index.ts',
   mode: 'development',
   devServer: {
-    contentBase: path.join(process.cwd(), process.env.OUTPUT),
+    contentBase: path.join(process.cwd(), '..', '..', process.env.OUTPUT),
     port: process.env.PORT,
   },
   output: {
@@ -27,11 +27,12 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'container',
-      library: { type: 'var', name: 'container' },
-      remotes: {
-        app1: 'app1',
-        app2: 'app2',
+      name: 'app1',
+      library: { type: 'var', name: 'app1' },
+      filename: 'remoteEntry.js',
+      exposes: {
+        // expose each component
+        './CounterAppOne': './src/components/CounterAppOne',
       },
       shared: {
         ...deps,
@@ -44,7 +45,7 @@ module.exports = {
       },
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.dev.html',
+      template: './public/index.html',
     }),
   ],
 };

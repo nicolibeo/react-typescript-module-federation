@@ -37,5 +37,15 @@
   },
   "affected": {
     "defaultBase": "master"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
   }
 }
