@@ -1,14 +1,31 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
-const nrwlConfig = require("@nrwl/react/plugins/webpack.js"); // require the main @nrwl/react/plugins/webpack configuration function.
-
 const path = require('path');
 const deps = require('../../package.json').dependencies;
 
-module.exports = (config, context) => {
-  nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs, 
-
-  config.plugins.push(
+const config = {
+  entry: './src/index.ts',
+  mode: 'development',
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    port: 3000,
+  },
+  output: {
+    publicPath: 'http://localhost:3000/',
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx|tsx|ts)$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  plugins: [
     new ModuleFederationPlugin({
       name: 'container',
       library: { type: 'var', name: 'container' },
@@ -25,9 +42,11 @@ module.exports = (config, context) => {
           requiredVersion: deps['react-dom'],
         },
       },
-    })
-  );
-  console.log("config", JSON.stringify(config))
-
-  return config;
+    }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+  ],
 };
+
+module.exports = config;

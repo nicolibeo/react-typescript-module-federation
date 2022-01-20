@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@libs/design-system';
+// import { Button } from '@libs/design-system';
 
 const Counter = () => {
   const [count, setCount] = useState(0);
@@ -10,7 +10,7 @@ const Counter = () => {
         Add by one each click <strong>APP-1</strong>
       </p>
       <p>Your click count : {count} </p>
-      <Button onClick={() => setCount(count + 1)}>Click me</Button>
+      {/* <Button onClick={() => setCount(count + 1)}>Click me</Button> */}
     </div>
   );
 };

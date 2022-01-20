@@ -8,7 +8,7 @@
       "executor": "@nrwl/web:webpack",
       "options": {
         "outputPath": "dist/apps/container",
-        "webpackConfig": "apps/container/webpack.config.js",
+        "webpackConfig": "apps/container/webpack.nx.js",
         "index": "apps/container/public/index.html",
         "main": "apps/container/src/index.ts",
         "tsConfig": "apps/container/tsconfig.app.json",
@@ -55,6 +55,17 @@
         "production": {
           "buildTarget": "container:build:production"
         }
+      }
+    },
+    "webpack": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "maxWorkers": 1,
+        "tsConfig": "container/tsconfig.json",
+        "memoryLimit": 10281,
+        "command": "webpack-dev-server --config webpack.config.js",
+        "cwd": "apps/container"
       }
     }
   },
