@@ -2,7 +2,7 @@ import React from 'react';
 //@ts-ignore
 import CounterAppTwo from 'app2/CounterAppTwo';
 //@ts-ignore
-import CounterAppOne from 'app1/CounterAppOne';
+// import CounterAppOne from 'app1/CounterAppOne';
 
 export default () => (
   <div style={{ margin: '20px' }}>
@@ -33,7 +33,7 @@ export default () => (
             }}
           >
             <h2>APP-1</h2>
-            <CounterAppOne />
+            {/* <CounterAppOne /> */}
           </div>
           <div style={{ border: '1px dashed black', padding: '2rem' }}>
             <h2>APP-2</h2>

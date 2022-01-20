@@ -3,25 +3,58 @@
   "sourceRoot": "apps/app1/src",
   "projectType": "application",
   "targets": {
+
     "build": {
-      "executor": "@nrwl/workspace:run-commands",
-      "outputs": ["../dist/app1"],
+      "executor": "@nrwl/web:webpack",
       "options": {
+        "outputPath": "dist/apps/app1",
+        "webpackConfig": "apps/app1/webpack.config.js",
+        "index": "apps/app1/public/index.html",
+        "main": "apps/app1/src/index.ts",
+        "tsConfig": "apps/app1/tsconfig.app.json",
+        "assets": [],
         "maxWorkers": 1,
-        "memoryLimit": 10281,
-        "command": "webpack --config webpack.prod.js",
-        "cwd": "apps/app1"
-      }
+        "styles": [],
+        "scripts": [],
+        "buildLibsFromSource": true
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/app1/src/environments/environment.ts",
+              "with": "apps/app1/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "extractCss": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        }
+      },
+      "outputs": ["{options.outputPath}"]
     },
     "serve": {
-      "executor": "@nrwl/workspace:run-commands",
-      "outputs": [],
+      "executor": "@nrwl/web:dev-server",
       "options": {
-        "maxWorkers": 1,
-        "tsConfig": "app1/tsconfig.json",
-        "memoryLimit": 10281,
-        "command": "webpack-dev-server",
-        "cwd": "apps/app1"
+        "buildTarget": "app1:build",
+        "port": 3001,
+        "liveReload": false
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "app1:build:production"
+        }
       }
     }
   },

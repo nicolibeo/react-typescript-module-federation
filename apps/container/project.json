@@ -3,25 +3,58 @@
   "sourceRoot": "apps/container/src",
   "projectType": "application",
   "targets": {
+
     "build": {
-      "executor": "@nrwl/workspace:run-commands",
-      "outputs": ["../dist"],
+      "executor": "@nrwl/web:webpack",
       "options": {
+        "outputPath": "dist/apps/container",
+        "webpackConfig": "apps/container/webpack.config.js",
+        "index": "apps/container/public/index.html",
+        "main": "apps/container/src/index.ts",
+        "tsConfig": "apps/container/tsconfig.app.json",
+        "assets": [],
         "maxWorkers": 1,
-        "memoryLimit": 10281,
-        "command": "webpack --config webpack.prod.js",
-        "cwd": "apps/container"
-      }
+        "styles": [],
+        "scripts": [],
+        "buildLibsFromSource": true
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/container/src/environments/environment.ts",
+              "with": "apps/container/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "extractCss": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        }
+      },
+      "outputs": ["{options.outputPath}"]
     },
     "serve": {
-      "executor": "@nrwl/workspace:run-commands",
-      "outputs": [],
+      "executor": "@nrwl/web:dev-server",
       "options": {
-        "maxWorkers": 1,
-        "tsConfig": "container/tsconfig.json",
-        "memoryLimit": 10281,
-        "command": "webpack-dev-server",
-        "cwd": "apps/container"
+        "buildTarget": "container:build",
+        "port": 3000,
+        "liveReload": false
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "container:build:production"
+        }
       }
     }
   },

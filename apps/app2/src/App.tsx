@@ -1,4 +1,3 @@
-import React from 'react';
 import CounterAppTwo from './components/CounterAppTwo';
 
 export default () => (

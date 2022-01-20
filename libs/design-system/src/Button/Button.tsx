@@ -1,5 +1,5 @@
-export const Button:React.FunctionComponent = ({ children }) => {
+export const Button:React.FunctionComponent<{ onClick: () => void}> = ({ children, onClick }) => {
   return (
-    <button>{children}</button>
+    <button onClick={onClick}>{children}</button>
   );
 };
