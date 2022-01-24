@@ -3,11 +3,11 @@ const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
 const deps = require('../../package.json').dependencies;
 
-module.exports = {
-  entry: './src/index.ts',
+const config = {
+entry: './src/index.ts',
   mode: 'development',
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    static: path.join(__dirname, 'dist'),
     port: 3002,
   },
   output: {
@@ -49,3 +49,5 @@ module.exports = {
     }),
   ],
 };
+console.log("config", JSON.stringify(config))
+module.exports = config;

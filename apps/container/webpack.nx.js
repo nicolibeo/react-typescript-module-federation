@@ -5,7 +5,7 @@ const nrwlConfig = require("@nrwl/react/plugins/webpack.js"); // require the mai
 const path = require('path');
 const deps = require('../../package.json').dependencies;
 
-module.exports = (config, context) => {
+module.exports = (config) => {
   nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs, 
 
   config.plugins.push(
@@ -27,7 +27,6 @@ module.exports = (config, context) => {
       },
     })
   );
-  console.log("config", JSON.stringify(config))
 
   return config;
 };
