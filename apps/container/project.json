@@ -61,9 +61,6 @@
       "executor": "@nrwl/workspace:run-commands",
       "outputs": [],
       "options": {
-        "maxWorkers": 1,
-        "tsConfig": "container/tsconfig.json",
-        "memoryLimit": 10281,
         "command": "webpack-dev-server --config webpack.config.js",
         "cwd": "apps/container"
       }

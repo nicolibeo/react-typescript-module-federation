@@ -7,7 +7,7 @@ const config = {
   entry: './src/index.ts',
   mode: 'development',
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    static: path.join(__dirname, 'dist'),
     port: 3000,
   },
   output: {
@@ -30,7 +30,7 @@ const config = {
       name: 'container',
       library: { type: 'var', name: 'container' },
       remotes: {
-        app1: 'app1',
+        // app1: 'app1',
         app2: 'app2',
       },
       shared: {

@@ -28,9 +28,8 @@ module.exports = (config) => {
   ];
   
   config.output = {
-    uniqueName: 'app2',
+    ...config.output,
     publicPath: 'auto',
-    clean: true,
   };
   config.optimization.runtimeChunk = false;
 

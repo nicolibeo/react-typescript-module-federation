@@ -3,10 +3,9 @@ const nrwlConfig = require("@nrwl/react/plugins/webpack.js"); // require the mai
 const deps = require('../../package.json').dependencies;
 
 module.exports = (config) => {
-  const webpackConfig = nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs, 
+  nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs, 
   
-  webpackConfig.plugins = [
-    ...webpackConfig.plugins,
+  config.plugins.push(
     new ModuleFederationPlugin({
       name: 'app1',
       library: { type: 'var', name: 'app1' },
@@ -25,14 +24,26 @@ module.exports = (config) => {
         },
       },
     })
-  ];
+  );
   
-  config.output = {
-    uniqueName: 'app1',
-    publicPath: 'auto',
-    clean: true,
-  };
-  config.optimization.runtimeChunk = false;
+  if(process.env === "production") {
+    config.output = {
+      path:"/Users/nicolaslabbe/projects/test/react-typescript-module-federation/dist/apps/app1",
+      // filename:"[name].js",
+      // chunkFilename:"[name].js",
+      // hashFunction:"xxhash64",
+      pathinfo:false,
+      publicPath:"auto",
+      crossOriginLoading:false
+    };
+  }else {
+    config.output = {
+      ...config.output,
+      publicPath: 'auto',
+    };
+    config.optimization.runtimeChunk = false;
+  }
+  console.log("config", JSON.stringify(config.output))
 
-  return webpackConfig;
+  return config;
 };
