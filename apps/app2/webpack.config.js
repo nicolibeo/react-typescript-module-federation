@@ -32,7 +32,7 @@ entry: './src/index.ts',
       filename: 'remoteEntry.js',
       exposes: {
         // expose each component
-        './CounterAppTwo': './src/components/CounterAppTwo',
+        './CounterAppTwo': './src/bootstrap',
       },
       shared: {
         ...deps,

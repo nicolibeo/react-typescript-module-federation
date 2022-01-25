@@ -1,29 +1,41 @@
 const { ModuleFederationPlugin } = require('webpack').container;
-const nrwlConfig = require("@nrwl/react/plugins/webpack.js"); // require the main @nrwl/react/plugins/webpack configuration function.
-const deps = require('../../package.json').dependencies;
+const { dependencies } = require('../../package.json');
 
 module.exports = (config) => {
-  nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs, 
-
   config.plugins.push(
     new ModuleFederationPlugin({
       name: 'container',
-      library: { type: 'var', name: 'container' },
       remotes: {
-        // app1: 'app1',
-        app2: 'app2',
+        app2: 'app2@//localhost:3002/remoteEntry.js'
       },
       shared: {
-        ...deps,
-        react: { singleton: true, eager: true, requiredVersion: deps.react },
-        'react-dom': {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps['react-dom'],
-        },
+        ...dependencies,
       },
     })
   );
+  config.output.publicPath = 'http://localhost:3000/';
+  config.module.rules = [
+    {
+      test: /\.m?js/,
+      resolve: {
+        fullySpecified: false,
+      },
+    },
+    {
+      test: /\.(js|tsx|ts)$/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            '@babel/preset-react',
+            '@babel/preset-env',
+            '@babel/preset-typescript',
+          ],
+          plugins: ['@babel/plugin-transform-runtime'],
+        },
+      },
+    },
+  ];
 
   return config;
 };

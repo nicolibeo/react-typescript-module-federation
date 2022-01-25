@@ -6,11 +6,15 @@
 
     "build": {
       "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "compiler": "babel",
+        "baseHref": "/",
         "outputPath": "dist/apps/app2",
         "webpackConfig": "apps/app2/webpack.nx.js",
         "index": "apps/app2/public/index.html",
-        "main": "apps/app2/src/index.ts",
+        "main": "apps/app2/src/main.tsx",
         "tsConfig": "apps/app2/tsconfig.app.json",
         "assets": [],
         "maxWorkers": 1,
@@ -29,32 +33,23 @@
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": false,
-          "extractCss": true,
           "namedChunks": false,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "2mb",
-              "maximumError": "5mb"
-            }
-          ]
+          "vendorChunk": false
         }
-      },
-      "outputs": ["{options.outputPath}"]
+      }
     },
     "serve": {
       "executor": "@nrwl/web:dev-server",
       "options": {
         "buildTarget": "app2:build",
         "port": 3002,
-        "liveReload": false,
-        "cwd": "apps/app2"
+        "hmr": true
       },
       "configurations": {
         "production": {
-          "buildTarget": "app2:build:production"
+          "buildTarget": "app2:build:production",
+          "hmr": false
         }
       }
     },

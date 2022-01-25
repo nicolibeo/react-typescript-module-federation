@@ -1,37 +1,48 @@
-const { ModuleFederationPlugin } = require('webpack').container;
-const nrwlConfig = require("@nrwl/react/plugins/webpack.js"); // require the main @nrwl/react/plugins/webpack configuration function.
-const deps = require('../../package.json').dependencies;
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const { dependencies } = require('../../package.json');
 
-module.exports = (config) => {
-  const webpackConfig = nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs, 
-  
-  webpackConfig.plugins = [
-    ...webpackConfig.plugins,
+module.exports = (config, context) => {
+  config.context = process.cwd();
+  config.plugins.push(
     new ModuleFederationPlugin({
       name: 'app2',
-      library: { type: 'var', name: 'app2' },
       filename: 'remoteEntry.js',
       exposes: {
-        // expose each component
-        './CounterAppTwo': './src/components/CounterAppTwo',
+        './CounterAppTwo': 'apps/app2/src/bootstrap',
       },
       shared: {
-        ...deps,
-        react: { singleton: true, eager: true, requiredVersion: deps.react },
-        'react-dom': {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps['react-dom'],
-        },
+        ...dependencies,
       },
     })
-  ];
-  
-  config.output = {
-    ...config.output,
-    publicPath: 'auto',
-  };
+  );
   config.optimization.runtimeChunk = false;
+  config.output = {
+    uniqueName: 'app2',
+    publicPath: 'http://localhost:3002/',
+    clean: true,
+  };
+  config.module.rules = [
+    {
+      test: /\.m?js/,
+      resolve: {
+        fullySpecified: false,
+      },
+    },
+    {
+      test: /\.(js|tsx|ts)$/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            '@babel/preset-react',
+            '@babel/preset-env',
+            '@babel/preset-typescript',
+          ],
+          plugins: ['@babel/plugin-transform-runtime'],
+        },
+      },
+    },
+  ];
 
-  return webpackConfig;
+  return config;
 };

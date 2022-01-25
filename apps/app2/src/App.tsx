@@ -1,10 +1,22 @@
+import React from 'react';
+import { Router, Route } from 'react-router-dom';
 import CounterAppTwo from './components/CounterAppTwo';
 
-export default () => (
-  <div style={{ margin: '20px' }}>
-    <div>APP-2</div>
+const App = ({ history }: any) => {
+  return (
     <div>
-      <CounterAppTwo />
+        <Router history={history}>
+            <Route path="/">
+            <div style={{ margin: '20px' }}>
+              <div>APP-2</div>
+              <div>
+                <CounterAppTwo />
+              </div>
+            </div>
+            </Route>
+        </Router>
     </div>
-  </div>
-);
+  );
+};
+
+export default App;
