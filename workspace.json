@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "app1": "apps/app1",
     "app2": "apps/app2",
     "container": "apps/container",
     "design-system": "libs/design-system"

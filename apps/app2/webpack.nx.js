@@ -17,8 +17,9 @@ module.exports = (config, context) => {
   );
   config.optimization.runtimeChunk = false;
   config.output = {
+    ...config.output,
     uniqueName: 'app2',
-    publicPath: 'http://localhost:3002/',
+    publicPath: 'auto',
     clean: true,
   };
   config.module.rules = [

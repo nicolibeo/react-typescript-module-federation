@@ -52,14 +52,6 @@
           "hmr": false
         }
       }
-    },
-    "webpack": {
-      "executor": "@nrwl/workspace:run-commands",
-      "outputs": [],
-      "options": {
-        "command": "webpack-dev-server --config webpack.config.js",
-        "cwd": "apps/container"
-      }
     }
   },
   "tags": []

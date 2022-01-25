@@ -6,11 +6,15 @@
 
     "build": {
       "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "development",
       "options": {
+        "compiler": "babel",
+        "baseHref": "/",
         "outputPath": "dist/apps/app1",
         "webpackConfig": "apps/app1/webpack.nx.js",
         "index": "apps/app1/public/index.html",
-        "main": "apps/app1/src/index.ts",
+        "main": "apps/app1/src/main.tsx",
         "tsConfig": "apps/app1/tsconfig.app.json",
         "assets": [],
         "maxWorkers": 1,
@@ -29,51 +33,24 @@
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": false,
-          "extractCss": true,
           "namedChunks": false,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "2mb",
-              "maximumError": "5mb"
-            }
-          ]
+          "vendorChunk": false
         }
-      },
-      "outputs": ["{options.outputPath}"]
+      }
     },
     "serve": {
       "executor": "@nrwl/web:dev-server",
       "options": {
         "buildTarget": "app1:build",
         "port": 3001,
-        "liveReload": false
+        "hmr": true
       },
       "configurations": {
         "production": {
-          "buildTarget": "app1:build:production"
+          "buildTarget": "app1:build:production",
+          "hmr": false
         }
-      }
-    },
-    "webpack": {
-      "executor": "@nrwl/workspace:run-commands",
-      "outputs": [],
-      "options": {
-        "maxWorkers": 1,
-        "tsConfig": "app1/tsconfig.json",
-        "memoryLimit": 10281,
-        "command": "webpack-dev-server --config webpack.config.js",
-        "cwd": "apps/app1"
-      }
-    },
-    "webpack:build": {
-      "executor": "@nrwl/workspace:run-commands",
-      "outputs": [],
-      "options": {
-        "command": "webpack --config webpack.config.js",
-        "cwd": "apps/app1"
       }
     }
   },

@@ -1,49 +1,50 @@
-const { ModuleFederationPlugin } = require('webpack').container;
-const nrwlConfig = require("@nrwl/react/plugins/webpack.js"); // require the main @nrwl/react/plugins/webpack configuration function.
-const deps = require('../../package.json').dependencies;
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const { dependencies } = require('../../package.json');
 
-module.exports = (config) => {
-  nrwlConfig(config); // first call it so that it @nrwl/react plugin adds its configs, 
-  
+module.exports = (config, context) => {
+  config.context = process.cwd();
   config.plugins.push(
     new ModuleFederationPlugin({
       name: 'app1',
-      library: { type: 'var', name: 'app1' },
       filename: 'remoteEntry.js',
       exposes: {
-        // expose each component
-        './CounterAppOne': './src/components/CounterAppOne',
+        './CounterAppOne': 'apps/app1/src/bootstrap',
       },
       shared: {
-        ...deps,
-        react: { singleton: true, eager: true, requiredVersion: deps.react },
-        'react-dom': {
-          singleton: true,
-          eager: true,
-          requiredVersion: deps['react-dom'],
-        },
+        ...dependencies,
       },
     })
   );
-  
-  if(process.env === "production") {
-    config.output = {
-      path:"/Users/nicolaslabbe/projects/test/react-typescript-module-federation/dist/apps/app1",
-      // filename:"[name].js",
-      // chunkFilename:"[name].js",
-      // hashFunction:"xxhash64",
-      pathinfo:false,
-      publicPath:"auto",
-      crossOriginLoading:false
-    };
-  }else {
-    config.output = {
-      ...config.output,
-      publicPath: 'auto',
-    };
-    config.optimization.runtimeChunk = false;
-  }
-  console.log("config", JSON.stringify(config.output))
+  config.optimization.runtimeChunk = false;
+  config.output = {
+    ...config.output,
+    uniqueName: 'app1',
+    // publicPath: 'http://localhost:3001/',
+    publicPath: 'auto',
+    clean: true,
+  };
+  config.module.rules = [
+    {
+      test: /\.m?js/,
+      resolve: {
+        fullySpecified: false,
+      },
+    },
+    {
+      test: /\.(js|tsx|ts)$/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            '@babel/preset-react',
+            '@babel/preset-env',
+            '@babel/preset-typescript',
+          ],
+          plugins: ['@babel/plugin-transform-runtime'],
+        },
+      },
+    },
+  ];
 
   return config;
 };

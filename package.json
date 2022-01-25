@@ -2,7 +2,8 @@
   "scripts": {
     "start": "nx run-many --target=serve --all",
     "build": "nx run-many --target=build --all --prod",
-    "serve": "serve dist -p 3000"
+    "serve": "serve dist -p 3000",
+    "serve:build": "serve -s -p 3000 dist/apps/container & serve -s -p 3001 dist/apps/app1 & serve -s -p 3002 dist/apps/app2"
   },
   "private": true,
   "dependencies": {

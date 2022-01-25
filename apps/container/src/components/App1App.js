@@ -1,9 +1,9 @@
-import { mount } from 'app2/CounterAppTwo';
+import { mount } from 'app1/CounterAppOne';
 import React, { useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const App2App = () => {
-    console.log("App2App App2App App2App App2App ")
+const App1App = () => {
+    console.log("App1App App1App App1App App1App ", mount)
     const ref = useRef(null);
     const history = useHistory();
 
@@ -11,7 +11,7 @@ const App2App = () => {
         const { onParentNavigate } = mount(ref.current, {
             initialPath: history.location.pathname,
             onNavigate: ({ pathname: nextPathname }) => {
-                console.log("onNavigate App2App onNavigate App2App onNavigate App2App ", nextPathname)
+                console.log("onNavigate App1App onNavigate App1App onNavigate App1App ", nextPathname)
                 const { pathname } = history.location;
                 if(pathname !== nextPathname) {
                     history.push(nextPathname);
@@ -24,4 +24,4 @@ const App2App = () => {
     return <div ref={ref}/>;
 };
 
-export default App2App;
+export default App1App;
